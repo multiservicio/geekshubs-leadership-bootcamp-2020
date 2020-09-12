@@ -67,7 +67,7 @@ Para instalar VirtualBox -> https://www.virtualbox.org/wiki/Downloads
 
 ## Código de ejemplo
 
-Durante el bloque iremos viendo ejemplos en código, para ello es muy recomendable tener a mano un buen editor de código con el que nos sintamos cómodos. Personalmente recomiendo `vscode` de Microsoft. Es multiplataforma y tiene infinidad de plugins in configuraciones.
+Durante el bloque iremos viendo ejemplos en código, para ello es muy recomendable tener a mano un buen editor de código con el que nos sintamos cómodos. Personalmente recomiendo `vscode` de Microsoft. Es multiplataforma y tiene infinidad de plugins y configuraciones.
 
 - vscode: https://code.visualstudio.com/
 
