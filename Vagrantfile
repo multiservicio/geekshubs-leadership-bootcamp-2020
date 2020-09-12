@@ -26,4 +26,9 @@ Vagrant.configure("2") do |config|
 
   config.vm.provision "microk8s", type: "shell", run: "never", path: "./provision/microk8s.sh"
 
+  config.vm.provision "ansible", run: "never", type: "ansible" do |ansible|
+    ansible.verbose = true
+    ansible.playbook = "tools/ansible/example-playbook.yml"
+  end
+
 end
