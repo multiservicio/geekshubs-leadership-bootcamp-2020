@@ -18,6 +18,13 @@ marp: true
 Configurar `nginx` como código.
 
 ---
+# Ansible
+
+### Prerequisitos
+
+- Instalar `ansible` en _local_
+- https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html
+---
 
 # Ansible
 

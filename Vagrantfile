@@ -30,7 +30,7 @@ Vagrant.configure("2") do |config|
 
   config.vm.provision "ansible", run: "never", type: "ansible" do |ansible|
     ansible.verbose = true
-    ansible.playbook = "tools/ansible/example-playbook.yml"
+    ansible.playbook = "tools/01-ansible/example-playbook.yml"
   end
 
 end
