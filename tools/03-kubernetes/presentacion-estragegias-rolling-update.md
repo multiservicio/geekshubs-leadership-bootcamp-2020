@@ -10,16 +10,16 @@ marp: true
 <!-- _backgroundImage: url('./../../img/background-red.png') -->
 <!-- _color: white -->
 
-# 2.5 Desplegando Contenedores
+# Desplegando Contenedores Kubernetes
 
 ---
 ![bg opacity:.2](https://media.giphy.com/media/Aff4ryYiacUO4/giphy.gif)
-# Rolling Update
+# Kubernetes
 
 ---
-# Rolling Update
+# Kubernetes
 
-Reemplazo progresivo de la versión.
+Reemplazo progresivo de la versión. Estrategia `Rolling Update`
 
 Tengo 3 réplicas. Cambio una de las _antiguas_ por una de la nueva.
 Luego otra y así hasta tener todas reemplazadas.
@@ -32,34 +32,36 @@ BBB
 ```
 
 ---
-# Rolling Update
+# Kubernetes
 
-- Si nuestra aplicación está preparada para trabajar con múltiples réplicas.
-- Si los cambios introducidos no _rompen_ y ambas versiones pueden convivir.
+### Requisitos de nuestra app
+
+- Nuestra aplicación está preparada para trabajar con múltiples réplicas.
+- Los cambios introducidos no _rompen_ y ambas versiones pueden convivir.
 
 ---
-# Rolling Update
+# Kubernetes
 
 - Sin _downtime_
 - Cambio incremental, menos riesgo.
 - Poder parar el cambio sin afectar al 100% de los usuarios.
 
 ---
-# Rolling Update
+# Kubernetes
 
 `vagrant up --provision-with microk8s`
 
 ---
 ![bg auto opacity:.2](https://upload.wikimedia.org/wikipedia/commons/thumb/3/39/Kubernetes_logo_without_workmark.svg/1200px-Kubernetes_logo_without_workmark.svg.png)
-# Rolling Update
+# Kubernetes
 
 ---
-# Rolling Update
+# Kubernetes
 
 _if_ vagrant -> Vamos a copiar los ficheros a la carpeta `/home` dentro de la máquina virtual.
 
 ```
-cp -a /vagrant/part-2/ .
+cp -a /vagrant/tools/kubernetes/ .
 ```
 
 ---
@@ -77,7 +79,7 @@ Y comprobamos con:
 `sudo docker images`
 
 ---
-# Rolling Update
+# Kubernetes
 
 **ATENCIÓN**: Este paso únicamente es por usar `microk8s`.
 
@@ -93,7 +95,7 @@ sudo microk8s.ctr image import lb:v1.tar
 ```
 
 ---
-# Rolling Update
+# Kubernetes
 
 Es hora de desplegar nuestra aplicación. Primero la `v1`.
 
@@ -104,14 +106,14 @@ Y luego exponerla mediante el balanceador:
 `microk8s.kubectl apply -f lb.yml`
 
 ---
-# Rolling Update
+# Kubernetes
 
 `microk8s.kubectl get services`
 `microk8s.kubectl get pod`
 `microk8s.kubectl get deployment`
 
 ---
-# Rolling Update
+# Kubernetes
 
 Ahora vamos a deplegar nuestra versión `v2`.
 
@@ -121,16 +123,10 @@ y sustituimos `v1` por `v2` en el `tag` de la imagen del contenedor.
 
 ---
 ![bg opacity:.2](https://imagenes.20minutos.es/files/image_656_370/uploads/imagenes/2019/05/21/957237.jpg)
-# Rolling Update
+# Kubernetes
 
 ---
-# Rolling Update
-
-- Sin _downtime_
-- Implementación de moderada dificultad.
-
----
-# Rolling Update
+# Kubernetes
 
 Ejercicio:
 
