@@ -79,7 +79,7 @@ Hay ciertos plugins para vscode que nos pueden ayudar pero no son para nada obli
 
 # Material de clase
 
-Todo el material del curso lo encontrareis en este repositorio. Las transparencias estan hechas con [Markdown](https://www.markdownguide.org/). Y usando el motor de renderizado de [Marp](https://marp.app/). Existe también plugin para vscode por lo que si quereis podeis ver las transparencias en la misma ventana que el código y la terminal.
+Todo el material del curso lo encontrareis en este repositorio y en las transparencias compartidas. Las transparencias que están en este repositorio estan hechas con [Markdown](https://www.markdownguide.org/). Y usando el motor de renderizado de [Marp](https://marp.app/). Existe también plugin para vscode por lo que si quereis podeis ver las transparencias en la misma ventana que el código y la terminal.
 
 Si teneis curiosidad por la sintaxis de Marp, la tenéis [aquí](https://marpit.marp.app/directives).
 
@@ -90,4 +90,4 @@ Si decidís usar vscode con el plugin de `marp` podeis llegar a ver todo el mate
 
 
 ----
-Geekhubs - DevOps Bootcamp 2020 - Pedro Díaz
+Geekhubs - Tech Managemente & Leadership Bootcamp 2020 - Pedro Díaz
