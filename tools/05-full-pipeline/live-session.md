@@ -7,8 +7,8 @@
 ## Instalar software que necesitaremos
 
 1) `vagrant ssh`
-2) `cp -ar /vagrant/part-3/manifests .`
-3) `cp -ar /vagrant/part-3/acme-inc .`
+2) `cp -ar /vagrant/tools/05-full-pipeline/manifests .`
+3) `cp -ar /vagrant/tools/05-full-pipeline/acme-inc .`
 4) `kubectl apply -f manifests/gogs.yml`
 5) `kubectl apply -f manifests/jenkins-sa.yml`
 6) `kubectl apply -f manifests/jenkins.yml`

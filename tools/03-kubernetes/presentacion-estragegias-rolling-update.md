@@ -61,7 +61,7 @@ BBB
 _if_ vagrant -> Vamos a copiar los ficheros a la carpeta `/home` dentro de la máquina virtual.
 
 ```
-cp -a /vagrant/tools/kubernetes/ .
+cp -a /vagrant/tools/03-kubernetes/ .
 ```
 
 ---
