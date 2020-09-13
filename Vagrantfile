@@ -16,13 +16,15 @@ Vagrant.configure("2") do |config|
     vb.name = "geekshub-bootcamp"
 
     # Customize the amount of memory on the VM:
-    vb.memory = 1024 * 4
+    vb.memory = 1024 * 6
     vb.cpus = 4
   end
 
   config.vm.provision "shell", run: "up", inline: <<-SHELL
     apt-get update
   SHELL
+
+  config.vm.provision "docker", type: "shell", run: "never", path: "./provision/docker.sh"
 
   config.vm.provision "microk8s", type: "shell", run: "never", path: "./provision/microk8s.sh"
 
