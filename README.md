@@ -4,8 +4,8 @@
 
 ```
 Profesor: Pedro Díaz
-Viernes XX, Septiembre 2020
-Sábado XX, Septiembre 2020
+Viernes 18, Septiembre 2020
+Sábado 19, Septiembre 2020
 Total: 10h (5h + 5h)
 ```
 
@@ -32,7 +32,8 @@ Integration / Continuous Delivery).
 - Día 2:
     - Seguiremos el camino de Acme Inc. hacia el éxito implementando devops en la organización.
         - Herramientas más usadas actualmente para cada parte del _pipeline_ clásico devops.
-        - Pipeline completo, de ejemplo, con todo lo aprendido. (_Live coding session_)
+    - Además hablaremos sobre la parte cultural de un equipo DevOps. Lo haremos mediante una charla y un posterior debate.
+    - Para finalizar haremos una _live session_ donde implementaremo una _pipeline_ completa de desarrollo y despliegue.
 
 ## Requerimientos
 
