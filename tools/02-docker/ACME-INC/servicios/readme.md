@@ -8,6 +8,14 @@ docker-compose -f docker-compose.yml up --build
 
 Seguir el wizard. (En el output de la consola saldrá el token)
 
+## Plugins
+- Docker pipeline
+- Docker plugin
+- docker-build-step
+- docker
+
+## Configurar multibranch job
+
 ## Registry
 
 No hay que hacer ningún setup adicional
