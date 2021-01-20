@@ -1,11 +1,11 @@
-# Geekshubs Leadership & Tech Management Bootcamp, 2020
+# Geekshubs Leadership & Tech Management Bootcamp, 2021
 
 # Módulo 4 - DevOps
 
 ```
 Profesor: Pedro Díaz
-Viernes 18, Septiembre 2020
-Sábado 19, Septiembre 2020
+Viernes 22, Enero 2021
+Sábado 23, Enero 2021
 Total: 10h (5h + 5h)
 ```
 
@@ -91,4 +91,4 @@ Si decidís usar vscode con el plugin de `marp` podeis llegar a ver todo el mate
 
 
 ----
-Geekhubs - Tech Managemente & Leadership Bootcamp 2020 - Pedro Díaz
+Geekhubs - Tech Managemente & Leadership Bootcamp 2021 - Pedro Díaz
