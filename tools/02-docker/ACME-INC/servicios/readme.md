@@ -13,6 +13,7 @@ Seguir el wizard. (En el output de la consola saldrá el token)
 - Docker plugin
 - docker-build-step
 - docker
+- docker common
 
 ## Configurar multibranch job
 
