@@ -4,8 +4,8 @@
 
 ```
 Profesor: Pedro Díaz
-Viernes 22, Enero 2021
-Sábado 23, Enero 2021
+Viernes 3, Junio 2021
+Sábado 4, Junio 2021
 Total: 10h (5h + 5h)
 ```
 
