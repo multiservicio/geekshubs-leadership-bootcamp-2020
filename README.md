@@ -4,8 +4,8 @@
 
 ```
 Profesor: Pedro Díaz
-Viernes 3, Junio 2021
-Sábado 4, Junio 2021
+Viernes 11, Febrero 2022
+Sábado 12, Febrero 2022
 Total: 10h (5h + 5h)
 ```
 
@@ -91,4 +91,4 @@ Si decidís usar vscode con el plugin de `marp` podeis llegar a ver todo el mate
 
 
 ----
-Geekhubs - Tech Managemente & Leadership Bootcamp 2021 - Pedro Díaz
+Geekhubs - Tech Managemente & Leadership Bootcamp 2022 - Pedro Díaz
