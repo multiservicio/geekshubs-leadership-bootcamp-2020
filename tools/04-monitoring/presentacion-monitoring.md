@@ -94,7 +94,7 @@ Ahora podemos acceder a los servicios en la IP de la máquina virtual y el puert
 
 Si usamos Vagrant, será:
 
-`http://10.10.10.10` y el puerto que vemos del rango 3xxxx
+`http://192.168.56.10` y el puerto que vemos del rango 3xxxx
 
 ```bash
 kubectl get svc -A
