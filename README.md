@@ -1,12 +1,11 @@
 # Geekshubs Leadership & Tech Management Bootcamp, 2021
 
-# Módulo 4 - DevOps
+# Módulo 5 - DevOps
 
 ```
 Profesor: Pedro Díaz
-Viernes 11, Febrero 2022
-Sábado 12, Febrero 2022
-Total: 10h (5h + 5h)
+Sábado 21, Mayo 2022
+Total: 5h
 ```
 
 > En este bloque se centrará en conocer las funciones de un DevOps y sus herramientas
@@ -20,20 +19,17 @@ Integration / Continuous Delivery).
 
 ## Agenda
 
-- Día 1:
-    - ¿Qué es DevOps?
-        - Breve historia sobre el término y la cultura detrás.
-        - Pilares sobre los que se basa.
-        - Metodologías típicas que se usan en entornos devops.
-        - DevOps en la organización.
-        - Ciclo de vida de una aplicación en un entorno devops.
-    - Presentaremos Acme Inc. una empresa la cual va a ir implementando de un equipo _tradicional_ a uno _devops_.
+- ¿Qué es DevOps?
+    - Breve historia sobre el término y la cultura detrás.
+    - Pilares sobre los que se basa.
+    - Metodologías típicas que se usan en entornos devops.
+    - DevOps en la organización.
+    - Ciclo de vida de una aplicación en un entorno devops.
+    - Herramientas más usadas actualmente para cada parte del _pipeline_ clásico devops.
+- Presentaremos Acme Inc. una empresa la cual va a ir implementando de un equipo _tradicional_ a uno _devops_.
+- Cultura _devops_
+- Para finalizar haremos una _live session_ donde implementaremo una _pipeline_ completa de desarrollo y despliegue.
 
-- Día 2:
-    - Seguiremos el camino de Acme Inc. hacia el éxito implementando devops en la organización.
-        - Herramientas más usadas actualmente para cada parte del _pipeline_ clásico devops.
-    - Además hablaremos sobre la parte cultural de un equipo DevOps. Lo haremos mediante una charla y un posterior debate.
-    - Para finalizar haremos una _live session_ donde implementaremo una _pipeline_ completa de desarrollo y despliegue.
 
 ## Requerimientos
 
