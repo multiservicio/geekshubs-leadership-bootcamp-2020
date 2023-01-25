@@ -1,4 +1,4 @@
-FROM nginx:1.17.8-alpine
+FROM nginx:stable
 
 # Copiar el site conf
 COPY myapp.conf /etc/nginx/conf.d/default.conf

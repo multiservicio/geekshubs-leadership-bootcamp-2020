@@ -26,80 +26,23 @@ marp: true
 ---
 # Monitoring
 
-### Grafana
+### Grafana Stack (Grafana, Tempo, Loki)
 
 ![w:320 center](https://grafana.com/static/img/logos/grafana_logo_swirl-events.svg)
 
 ---
 # Monitoring
 
-### FEK stack (FluentD, Elasticsearch, Kibana)
+### FEK stack (FluentBit, Elasticsearch, Kibana)
 
 ![w:600 center](https://allvectorlogo.com/img/2019/06/elastic-elasticsearch-logo-vector.png)
 
 ---
 # Instalación
 
-`sudo snap install microk8s --classic`
-
-Add-ons disponibles -> https://microk8s.io/docs/addons
-
-1) `microk8s enable prometheus` -> Prometheus + Grafana
-2) `microk8s enable fluentd` -> FEK stack
+En el apartado `00-setup` desplegamos los _manifests_ de Observability
 
 ---
 # Monitoring
-
-`microk8s enable prometheus` -> Prometheus + Grafana
 
 Demo
-
----
-# Monitoring
-
-`microk8s enable fluentd` -> FEK stack
-
-Demo
-
----
-# Monitoring
-
-Nota: Como estamos usando microk8s vamos a hacer 2 pequeños cambios para poder acceder tanto a Kibana como a Grafana.
-
-```bash
-# Para listar los servicios disponibles
-kubectl get svc -A
-# Editar el servicio que expone Grafana
-kubectl -n monitoring edit svc grafana
-# Editar el servicio que expone Kibana
-kubectl -n kube-system edit svc kibana-logging
-```
----
-# Monitoring
-
-Y cambiamos, donde ponía:
-
-```yaml
-type: ClusterIp
-```
-Ponemos:
-```yaml
-type: NodePort
-```
-
----
-# Monitoring
-
-Ahora podemos acceder a los servicios en la IP de la máquina virtual y el puerto que nos diga Kubernetes
-
-Si usamos Vagrant, será:
-
-`http://192.168.56.10` y el puerto que vemos del rango 3xxxx
-
-```bash
-kubectl get svc -A
-vagrant@ubuntu-bionic:~$ kubectl get svc -A
-NAMESPACE            NAME                    TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)                        AGE
-...
-monitoring           grafana                 NodePort    10.152.183.229   <none>        3000:30238/TCP                 30m
-kube-system          kibana-logging          NodePort    10.152.183.31    <none>        5601:30897/TCP                 30m

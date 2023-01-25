@@ -11,6 +11,9 @@ spec:
       app: myapp
   strategy:
     type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
   template:
     metadata:
       labels:
@@ -18,7 +21,7 @@ spec:
     spec:
       containers:
       - name: myapp
-        image: myapp:v1
+        image: localhost:30335/myapp:v1
         ports:
         - containerPort: 9000
 
@@ -30,10 +33,11 @@ metadata:
 spec:
   selector:
     app: myapp
-  type: ClusterIP
+  type: NodePort
   externalIPs:
   - 192.168.56.10
   ports:
     - protocol: TCP
       port: 9000
       targetPort: 9000
+      nodePort: 30900

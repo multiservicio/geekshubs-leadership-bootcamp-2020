@@ -6,15 +6,18 @@
   - name: Install the package "htop"
     apt:
       name: htop
+
   - name: Install nginx
     apt:
       name: nginx
       state: present
+
   - name: Ensure config directory exists
     become: true
     file:
       path: "/var/www/html"
       state: directory
+
   - name: Copy file /var/www/html/index.html
     template:
       src: templates/index.html
@@ -23,12 +26,14 @@
       group: vagrant
       mode: '0644'
     register: indexhtml
+
   - name: Template a file to /etc/nginx/sites-available/default
     template:
       src: templates/nginx.j2
       dest: /etc/nginx/sites-available/default
       owner: root
       group: root
+
   - name: restart service nginx when changes on the html
     service:
       name: nginx

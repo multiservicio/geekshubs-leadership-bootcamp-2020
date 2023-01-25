@@ -1,27 +1,27 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: app
+  name: welcome-page
   namespace: continuous-integration
   labels:
-    app: app
+    app: welcome-page
     company: acme
 spec:
-  replicas: 2
+  replicas: 3
   selector:
     matchLabels:
-      app: app
+      app: welcome-page
       company: acme
   strategy:
     type: RollingUpdate
   template:
     metadata:
       labels:
-        app: app
+        app: welcome-page
         company: acme
     spec:
       containers:
-      - name: app
+      - name: nginx
         image: localhost:30335/app:.TAG
         imagePullPolicy: Always
         ports:
@@ -31,13 +31,11 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: app
+  name: welcome-page
   namespace: continuous-integration
 spec:
-  externalIPs:
-  - 192.168.56.10
   selector:
-    app: app
+    app: welcome-page
   type: ClusterIP
   ports:
     - protocol: TCP

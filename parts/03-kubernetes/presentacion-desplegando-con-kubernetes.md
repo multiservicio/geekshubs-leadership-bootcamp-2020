@@ -49,49 +49,34 @@ BBB
 ---
 # Kubernetes
 
-`vagrant up --provision-with microk8s`
+Habilitamos Kubernetes en docker desktop
 
 ---
 ![bg auto opacity:.2](https://upload.wikimedia.org/wikipedia/commons/thumb/3/39/Kubernetes_logo_without_workmark.svg/1200px-Kubernetes_logo_without_workmark.svg.png)
 # Kubernetes
 
----
-# Kubernetes
-
-_if_ vagrant -> Vamos a copiar los ficheros a la carpeta `/home` dentro de la máquina virtual.
-
-```
-cp -a /vagrant/tools/03-kubernetes/ .
-```
 
 ---
 # Rollig Update
 
 Vamos a crear las imágenes de Docker necesarias primero:
 
-- `sudo docker build -t lb:v1 -f Dockerfile-lb .`
-- `sudo docker build -t myapp:v1 -f Dockerfile-myapp .`
+- `docker build -t localhost:330335/lb:v1 -f Dockerfile-lb .`
+- `docker build -t localhost:330335/myapp:v1 -f Dockerfile-myapp .`
 - Modificamos `index.html` y:
-- `sudo docker build -t myapp:v2 -f Dockerfile-myapp .`
+- `docker build -t localhost:30335/myapp:v2 -f Dockerfile-myapp .`
 
 Y comprobamos con:
 
-`sudo docker images`
+`docker images`
 
 ---
-# Kubernetes
+# Docker push
 
-**ATENCIÓN**: Este paso únicamente es por usar `microk8s`.
-
-Vamos a copiarle las imágenes de docker a kubernetes para que las "encuentre".
-
-```
-sudo docker save myapp:v1 > myapp:v1.tar
-sudo docker save myapp:v2 > myapp:v2.tar
-sudo docker save lb:v1 > lb:v1.tar
-sudo microk8s.ctr image import myapp:v1.tar
-sudo microk8s.ctr image import myapp:v2.tar
-sudo microk8s.ctr image import lb:v1.tar
+```bash
+docker push localhost:330335/lb:v1
+docker push localhost:330335/myapp:v1
+docker push localhost:30335/myapp:v2
 ```
 
 ---
@@ -99,25 +84,25 @@ sudo microk8s.ctr image import lb:v1.tar
 
 Es hora de desplegar nuestra aplicación. Primero la `v1`.
 
-`microk8s.kubectl -n default apply -f myapp.yml`
+`kubectl -n default apply -f myapp.yml`
 
 Y luego exponerla mediante el balanceador:
 
-`microk8s.kubectl apply -f lb.yml`
+`kubectl apply -f lb.yml`
 
 ---
 # Kubernetes
 
-`microk8s.kubectl get services`
-`microk8s.kubectl get pod`
-`microk8s.kubectl get deployment`
+`kubectl get services`
+`kubectl get pod`
+`kubectl get deployment`
 
 ---
 # Kubernetes
 
 Ahora vamos a deplegar nuestra versión `v2`.
 
-- `microk8s.kubectl edit deploy myapp`
+- `kubectl edit deploy myapp`
 
 y sustituimos `v1` por `v2` en el `tag` de la imagen del contenedor.
 
