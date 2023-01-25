@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: observability
+  labels:
+    name: observability
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: continuous-integration
+  labels:
+    name: continuous-integration
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: registry
+  labels:
+    name: registry

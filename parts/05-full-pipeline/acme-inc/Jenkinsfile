@@ -13,7 +13,7 @@ spec:
   serviceAccountName: jenkins
   containers:
   - name: docker
-    image: docker:18.09.9
+    image: docker:latest
     command:
     - cat
     tty: true
@@ -21,7 +21,7 @@ spec:
     - mountPath: /var/run/docker.sock
       name: docker-sock
   - name: kubectl
-    image: lachlanevenson/k8s-kubectl:v1.17.2
+    image: lachlanevenson/k8s-kubectl:latest
     command:
     - cat
     tty: true
@@ -51,7 +51,7 @@ spec:
         steps {
             container('docker') {
                 sh """
-                    docker build -t localhost:32000/app:$BUILD_NUMBER .
+                    docker build -t localhost:30335/app:$BUILD_NUMBER .
                 """
             }
         }
@@ -60,7 +60,7 @@ spec:
         steps {
             container('docker') {
                 sh """
-                    docker push localhost:32000/app:$BUILD_NUMBER
+                    docker push localhost:30335/app:$BUILD_NUMBER
                 """
             }
         }
@@ -68,7 +68,7 @@ spec:
             always {
                 container('docker') {
                     sh """
-                        docker rmi localhost:32000/app:$BUILD_NUMBER
+                        docker rmi localhost:30335/app:$BUILD_NUMBER
                     """
                 }
             }
@@ -81,7 +81,7 @@ spec:
         steps {
             container('kubectl') {
                 sh """
-                    sed -ie "s/.TAG/$BUILD_NUMBER/g" deployment-myapp.yml
+                    /bin/sed -ie "s/.TAG/$BUILD_NUMBER/g" deployment-myapp.yml
                     kubectl apply -f ./deployment-myapp.yml
                 """
             }

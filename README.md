@@ -49,13 +49,9 @@ Es una alternativa que, de momento, no tiene licencia comercial. (Ahora mismo Do
 https://rancherdesktop.io/
 
 
-### Virtualbox (únicamente), plan alternativo. Tener todo en una máquina virtual.
-
-Para instalar VirtualBox -> https://www.virtualbox.org/wiki/Downloads
-
 ## Kubernetes
 
-Tanto `Docker Desktop` como `Rancher Desktop` vienen con Kubernetes. En el caso de Docker Desktop viene con **MiniKube** y Rancher viene con su **K3s**. Cualquiera de los _sabores_ de Kubernetes nos vale para los ejemplos.
+Tanto `Docker Desktop` como `Rancher Desktop` vienen con Kubernetes. En el caso de Docker Desktop viene con su distribución de Kubernetes y Rancher viene con su **K3s**. Cualquiera de los _sabores_ de Kubernetes nos vale para los ejemplos.
 
 ## Código de ejemplo
 
