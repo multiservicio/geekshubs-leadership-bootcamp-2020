@@ -57,3 +57,12 @@ De igual manera podemos seguir como se despliegan las aplicaciones con el comman
 ```bash
 kubectl -n continuous-integration get po,svc
 ```
+
+## URLs de servicios disponibles
+
+- Jenkins, [http://localhost:30332](http://localhost:30332)
+- GOGS, [http://localhost:30333](http://localhost:30333)
+- Registry, [http://localhost:30335](http://localhost:30335)
+
+- Grafana, [http://localhost:30331](http://localhost:30331)
+- Prometheus, [http://localhost:30330](http://localhost:30330)

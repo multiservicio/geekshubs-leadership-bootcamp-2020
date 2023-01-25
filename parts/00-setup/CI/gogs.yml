@@ -253,7 +253,7 @@ spec:
       image: busybox
       command: ['nc'] # nc -vz (your router's IP address) (port)
       args: ['-vz', 'gogs-gogs-ssh', '22']
-  restartPolicy: Never
+  restartPolicy: OnFailure
 ---
 # Source: gogs/templates/tests/webui-test.yaml
 apiVersion: v1
@@ -273,4 +273,4 @@ spec:
       image: busybox
       command: ['wget']
       args: ['gogs-gogs-http:3000']
-  restartPolicy: Never
+  restartPolicy: OnFailure
