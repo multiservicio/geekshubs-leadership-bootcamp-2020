@@ -824,12 +824,13 @@ spec:
       port: 80
       protocol: TCP
       targetPort: 9090
+      nodePort: 30330
   selector:
     component: "server"
     app: prometheus
     release: prometheus
   sessionAffinity: None
-  type: "ClusterIP"
+  type: "NodePort"
 ---
 # Source: prometheus/charts/prometheus-node-exporter/templates/daemonset.yaml
 apiVersion: apps/v1
@@ -881,7 +882,7 @@ spec:
           args:
             - --path.procfs=/host/proc
             - --path.sysfs=/host/sys
-            - --path.rootfs=/host/root
+#            - --path.rootfs=/host/root
             - --web.listen-address=[$(HOST_IP)]:9100
           securityContext:
             allowPrivilegeEscalation: false
@@ -921,10 +922,10 @@ spec:
             - name: sys
               mountPath: /host/sys
               readOnly: true
-            - name: root
-              mountPath: /host/root
-              mountPropagation: HostToContainer
-              readOnly: true
+            # - name: root
+            #   mountPath: /host/root
+            #   mountPropagation: HostToContainer
+            #   readOnly: true
       hostNetwork: true
       hostPID: true
       tolerations:
@@ -937,9 +938,9 @@ spec:
         - name: sys
           hostPath:
             path: /sys
-        - name: root
-          hostPath:
-            path: /
+        # - name: root
+        #   hostPath:
+        #     path: /
 ---
 # Source: prometheus/charts/kube-state-metrics/templates/deployment.yaml
 apiVersion: apps/v1
@@ -1265,4 +1266,4 @@ spec:
       image: busybox
       command: ['wget']
       args: ['prometheus-alertmanager:9093']
-  restartPolicy: Never
+  restartPolicy: OnFailure

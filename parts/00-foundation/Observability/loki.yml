@@ -581,7 +581,7 @@ spec:
     volumeMounts:
     - name: tests
       mountPath: /var/lib/loki
-  restartPolicy: Never
+  restartPolicy: OnFailure
   volumes:
   - name: tests
     configMap:

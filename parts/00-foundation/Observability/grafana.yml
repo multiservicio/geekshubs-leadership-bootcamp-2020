@@ -167,7 +167,7 @@ data:
     - name: Prometheus
       type: prometheus
       access: proxy
-      url: http://prometheus-server.observability:9090
+      url: http://prometheus-server.observability:80
       isDefault: true
       editable: true
     - name: Loki
@@ -342,4 +342,4 @@ spec:
     - name: tests
       configMap:
         name: grafana-test
-  restartPolicy: Never
+  restartPolicy: OnFailure
