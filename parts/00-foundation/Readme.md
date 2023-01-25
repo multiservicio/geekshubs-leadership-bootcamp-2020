@@ -40,3 +40,20 @@ kubectl -n observability get po,svc
 Una vez finalizado puedes acceder a Grafana en la url [http://localhost:30331](http://localhost:30331)
 
 ### CI, integración continua
+
+Ahora vamos a levantar la infraestructura para CI.
+
+```bash
+cd CI
+kubectl -n continuous-integration apply -f .
+```
+
+De igual manera que hemos hecho con las herramientas de observabilidad. Pero ahora con Jenkins y GOGS.
+
+**NOTA:** Jenkins tarda un rato en estar disponible, paciencia :)
+
+De igual manera podemos seguir como se despliegan las aplicaciones con el commando:
+
+```bash
+kubectl -n continuous-integration get po,svc
+```
