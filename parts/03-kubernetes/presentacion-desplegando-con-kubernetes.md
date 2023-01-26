@@ -60,11 +60,9 @@ Habilitamos Kubernetes en docker desktop
 # Rollig Update
 
 Vamos a crear las imágenes de Docker necesarias primero:
-
-- `docker build -t localhost:330335/lb:v1 -f Dockerfile-lb .`
-- `docker build -t localhost:330335/myapp:v1 -f Dockerfile-myapp .`
+- `docker build -t localhost:30335/acme-inc-welcome-page:1 .`
 - Modificamos `index.html` y:
-- `docker build -t localhost:30335/myapp:v2 -f Dockerfile-myapp .`
+- `docker build -t localhost:30335/acme-inc-welcome-page:2 .`
 
 Y comprobamos con:
 
@@ -74,9 +72,12 @@ Y comprobamos con:
 # Docker push
 
 ```bash
-docker push localhost:330335/lb:v1
-docker push localhost:330335/myapp:v1
-docker push localhost:30335/myapp:v2
+docker push localhost:30335/acme-inc-welcome-page:1
+docker push localhost:30335/acme-inc-welcome-page:2
+```
+y la app
+```
+docker push localhost:30335/acme-inc-app:1
 ```
 
 ---
@@ -84,11 +85,11 @@ docker push localhost:30335/myapp:v2
 
 Es hora de desplegar nuestra aplicación. Primero la `v1`.
 
-`kubectl -n default apply -f myapp.yml`
+`kubectl apply -f welcome-page.yml`
 
-Y luego exponerla mediante el balanceador:
+Y luego la app:
 
-`kubectl apply -f lb.yml`
+`kubectl apply -f application.yml`
 
 ---
 # Kubernetes
@@ -97,14 +98,19 @@ Y luego exponerla mediante el balanceador:
 `kubectl get pod`
 `kubectl get deployment`
 
+o todo junto mediante:
+```
+kubectl get po,svc,deployment -n default
+```
+
 ---
 # Kubernetes
 
 Ahora vamos a deplegar nuestra versión `v2`.
 
-- `kubectl edit deploy myapp`
+- `kubectl edit deploy acme-welcome-page`
 
-y sustituimos `v1` por `v2` en el `tag` de la imagen del contenedor.
+y sustituimos `1` por `2` en el `tag` de la imagen del contenedor.
 
 ---
 ![bg opacity:.2](https://imagenes.20minutos.es/files/image_656_370/uploads/imagenes/2019/05/21/957237.jpg)
@@ -115,4 +121,4 @@ y sustituimos `v1` por `v2` en el `tag` de la imagen del contenedor.
 
 Ejercicio:
 
-- Construir v3 y desplegarla.
+- Construir 3 y desplegarla.

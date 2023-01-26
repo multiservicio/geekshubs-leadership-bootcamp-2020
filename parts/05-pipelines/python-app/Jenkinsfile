@@ -81,8 +81,8 @@ spec:
         steps {
             container('kubectl') {
                 sh """
-                    /bin/sed -ie "s/.TAG/$BUILD_NUMBER/g" deployment-myapp.yml
-                    kubectl apply -f ./deployment-myapp.yml
+                    /bin/sed -ie "s/.TAG/$BUILD_NUMBER/g" application.yml
+                    kubectl apply -f ./application.yml
                 """
             }
         }

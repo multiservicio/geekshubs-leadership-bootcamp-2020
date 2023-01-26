@@ -1,44 +1,45 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: welcome-page
-  namespace: continuous-integration
+  name: acme-inc-app
   labels:
-    app: welcome-page
+    app: acme-inc-app
     company: acme
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: welcome-page
+      app: acme-inc-app
       company: acme
   strategy:
     type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
   template:
     metadata:
       labels:
-        app: welcome-page
+        app: acme-inc-app
         company: acme
     spec:
       containers:
-      - name: nginx
-        image: localhost:30335/app:.TAG
-        imagePullPolicy: Always
+      - name: acme-inc-app
+        image: localhost:30335/acme-inc-app:1
         ports:
-        - containerPort: 9000
+        - containerPort: 8080
 
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: welcome-page
-  namespace: continuous-integration
+  name: acme-inc-app
 spec:
   selector:
-    app: welcome-page
-  type: ClusterIP
+    app: acme-inc-app
+  type: NodePort
   ports:
     - protocol: TCP
-      port: 9090
-      targetPort: 9000
+      port: 8080
+      targetPort: 8080
+      nodePort: 30980
       name: http

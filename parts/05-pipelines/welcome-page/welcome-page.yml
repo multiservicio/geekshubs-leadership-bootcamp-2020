@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: acme-welcome-page
+  namespace: continuous-integration
+  labels:
+    app: acme-welcome-page
+    company: acme
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: acme-welcome-page
+      company: acme
+  strategy:
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: acme-welcome-page
+        company: acme
+    spec:
+      containers:
+      - name: acme-welcome-page
+        image: localhost:30335/acme-inc-welcome-page:.TAG
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 80
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: acme-welcome-page
+  namespace: continuous-integration
+spec:
+  selector:
+    app: acme-welcome-page
+  type: NodePort
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+      nodePort: 30900

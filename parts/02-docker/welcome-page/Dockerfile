@@ -1,4 +1,4 @@
-FROM nginx:stable
+FROM nginx:alpine-slim
 
 # Copiar el site conf
 COPY acme-site.conf /etc/nginx/conf.d/default.conf
