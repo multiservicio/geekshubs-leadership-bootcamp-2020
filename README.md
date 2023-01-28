@@ -4,7 +4,7 @@
 
 ```
 Profesor: Pedro Díaz
-Sábado 21, Mayo 2022
+Sábado 28, Enero 2023
 Total: 5h
 ```
 
@@ -33,7 +33,7 @@ Integration / Continuous Delivery).
 
 ## Requerimientos
 
-Principalmente vamos a usar `docker` para toda la parte de los ejemplos y el live coding. También tocaremos, brevemente, algo de `Kubernetes`. Si tu sistema operativo es _Linux_ o _macOS_ no tendrás grandes problemas ya que funciona *algo* mejor que en _Windows_.
+Principalmente vamos a usar `Docker Desktop` (también con Rancher Desktop) para toda la parte de los ejemplos y el live coding. También tocaremos, brevemente, algo de `Kubernetes`. Si tu sistema operativo es _Linux_ o _macOS_ no tendrás grandes problemas ya que funciona *algo* mejor que en _Windows_.
 
 Para instalar `docker` hay dos formas, una sería instalarlo en tu sistema operativo base o bien crear una máquina virtual e instalarlo dentro.
 
@@ -43,24 +43,15 @@ Para la primera opción podemos seguir las guías oficiales:
 - macOS: https://docs.docker.com/docker-for-mac/install/
 - Linux (ubuntu): https://docs.docker.com/engine/install/ubuntu/
 
-Si queremos tener todo en una máquina virtual, entonces hay un par de alternativas, o bien instalamos una máquina virtual a mano en tu hypervisor preferido o usamos `vagrant` para hacer esto más sencillo.
+### Rancher Desktop
+Es una alternativa que, de momento, no tiene licencia comercial. (Ahora mismo Docker Desktop es únicamente gratuito para uso no comercial)
 
-> Si usas un entorno basado en Microsoft Windows, lo más cómodo será que tengas una máquina virtual Ubuntu ya lista y preparada. Nota, en Windows 10 por defecto el Hypervisor propio de microsoft da problemas si quieres usar VirtualBox. Puedes elegir o bien levantar la VM con el hypervisor nativo de Windows 10 o bien desactivar este e instalar VirtualBox.
+https://rancherdesktop.io/
 
-En ambos casos usaremos Ubuntu 18.04 LTS como _OS_ base.
 
-### Vagrant
+## Kubernetes
 
-Vagrant es un software que nos permite definir en un fichero `yaml` nuestra máquina virtual y además, nos da un extra de flexibilidad para operarla y provisionarla. Vagrant no deja de ser una interfaz entre nosotros y el hipervisor que controla la vm, por tanto seguimos dependiendo de un hipervisor para la máquina virtual. Lo recomendable (y gratuito) es instalar VirtualBox.
-
-Para instalar VirtualBox -> https://www.virtualbox.org/wiki/Downloads
-Para instalarl Vagrant -> https://www.vagrantup.com/downloads
-
-Para descargarnos de antemano (recomendable antes del inicio de la clase) la imágen de Ubuntu haremos: `vagrant box add ubuntu/bionic64` desde la terminal.
-
-### Virtualbox (únicamente)
-
-Para instalar VirtualBox -> https://www.virtualbox.org/wiki/Downloads
+Tanto `Docker Desktop` como `Rancher Desktop` vienen con Kubernetes. En el caso de Docker Desktop viene con su distribución de Kubernetes y Rancher viene con su **K3s**. Cualquiera de los _sabores_ de Kubernetes nos vale para los ejemplos.
 
 ## Código de ejemplo
 
@@ -72,7 +63,6 @@ Hay ciertos plugins para vscode que nos pueden ayudar pero no son para nada obli
 
 - Docker plugin: https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-docker
 - YAML suppor: https://marketplace.visualstudio.com/items?itemName=redhat.vscode-yaml
-- Gremlins tracker, plugin para ver código y carácteres que nos pueden dar problemas: https://marketplace.visualstudio.com/items?itemName=nhoizey.gremlins
 
 # Material de clase
 
@@ -87,4 +77,4 @@ Si decidís usar vscode con el plugin de `marp` podeis llegar a ver todo el mate
 
 
 ----
-Geekhubs - Tech Managemente & Leadership Bootcamp 2022 - Pedro Díaz
+Geekhubs - Tech Managemente & Leadership Bootcamp 2023 - Pedro Díaz

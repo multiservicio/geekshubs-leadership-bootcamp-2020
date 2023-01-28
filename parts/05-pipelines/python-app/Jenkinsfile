@@ -1,0 +1,91 @@
+pipeline {
+  agent {
+    kubernetes {
+      defaultContainer 'jnlp'
+      yaml """
+apiVersion: v1
+kind: Pod
+metadata:
+labels:
+  component: ci
+spec:
+  # Use service account that can deploy to all namespaces
+  serviceAccountName: jenkins
+  containers:
+  - name: docker
+    image: docker:latest
+    command:
+    - cat
+    tty: true
+    volumeMounts:
+    - mountPath: /var/run/docker.sock
+      name: docker-sock
+  - name: kubectl
+    image: lachlanevenson/k8s-kubectl:latest
+    command:
+    - cat
+    tty: true
+  volumes:
+    - name: docker-sock
+      hostPath:
+        path: /var/run/docker.sock
+"""
+}
+   }
+  stages {
+    stage('Preparations') {
+        steps {
+            script {
+                echo "Preparing!"
+            }
+        }
+    }
+    stage('Test') {
+        steps {
+            script {
+                echo "Testing!"
+            }
+        }
+    }
+    stage('Build') {
+        steps {
+            container('docker') {
+                sh """
+                    docker build -t localhost:30335/python-app:$BUILD_NUMBER .
+                """
+            }
+        }
+    }
+    stage('Push') {
+        steps {
+            container('docker') {
+                sh """
+                    docker push localhost:30335/python-app:$BUILD_NUMBER
+                """
+            }
+        }
+        post {
+            always {
+                container('docker') {
+                    sh """
+                        docker rmi localhost:30335/python-app:$BUILD_NUMBER
+                    """
+                }
+            }
+        }
+    }
+    stage('Deploy') {
+        when {
+            expression { BRANCH_NAME == 'master' }
+        }
+        steps {
+            container('kubectl') {
+                sh """
+                    /bin/sed -ie "s/.TAG/$BUILD_NUMBER/g" application.yml
+                    kubectl apply -f ./application.yml
+                """
+            }
+        }
+    }
+  }
+}

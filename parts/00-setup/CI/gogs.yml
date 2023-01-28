@@ -1,0 +1,276 @@
+---
+# Source: gogs/templates/db-secret.yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: gogs-db
+  labels:
+    app: postgres
+    chart: "gogs-0.1.3"
+    release: gogs
+    heritage: Helm
+type: Opaque
+data:
+  dbPassword: "QTZnOVlwRW1XdA=="
+---
+# Source: gogs/templates/gogs/gogs-config.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: gogs-gogs
+  labels:
+    app: gogs-gogs
+    chart: "gogs-0.1.3"
+    release: "gogs"
+    heritage: "Helm"
+data:
+  app.ini: |-
+    [server]
+    EXTERNAL_URL = http://localhost:30333/
+    DOMAIN = git.example.com
+    HTTP_PORT = 3000
+    UNIX_SOCKET_PERMISSION = 666
+    LOCAL_ROOT_URL = %(PROTOCOL)s://%(HTTP_ADDR)s:%(HTTP_PORT)s/
+
+    APP_DATA_PATH = /data
+
+    SSH_DOMAIN = %(DOMAIN)s
+    SSH_PORT = 22
+    SSH_DOMAIN = gogs-gogs-ssh.continuous-integration.svc.cluster.local
+    SSH_LISTEN_HOST = gogs-gogs-ssh.continuous-integration.svc.cluster.local
+    SSH_PORT = 22
+
+    DB_TYPE = sqllite
+
+    [cache]
+    ENABLED = true
+    ADAPTER = memcache
+    INTERVAL = 60
+    HOST = 127.0.0.1:11211
+    ITEM_TTL = 16h
+
+    [lfs]
+    OBJECTS_PATH = /data/lfs-objects
+---
+# Source: gogs/templates/gogs/gogs-http-svc.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: gogs-gogs-http
+  labels:
+    app: gogs-gogs
+    chart: "gogs-0.1.3"
+    release: "gogs"
+    heritage: "Helm"
+  annotations:
+    null
+spec:
+  type: NodePort
+  ports:
+  - name: http
+    port: 3000
+    targetPort: 3000
+    nodePort: 30333
+  selector:
+    app: gogs-gogs
+---
+# Source: gogs/templates/gogs/gogs-ssh-svc.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: gogs-gogs-ssh
+  labels:
+    app: gogs-gogs
+    chart: "gogs-0.1.3"
+    release: "gogs"
+    heritage: "Helm"
+  annotations:
+    null
+spec:
+  type: NodePort
+  ports:
+  - name: ssh
+    port: 22
+    targetPort: ssh
+    protocol: TCP
+    nodePort: 30322
+  selector:
+    app: gogs-gogs
+---
+# Source: gogs/templates/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gogs-gogs
+  labels:
+    app: gogs-gogs
+    chart: "gogs-0.1.3"
+    release: "gogs"
+    heritage: "Helm"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gogs-gogs
+  template:
+    metadata:
+      labels:
+        app: gogs-gogs
+    spec:
+      containers:
+      - name: gogs
+        image: gogs/gogs:0.12.3
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: gogs-db
+              key: dbPassword
+        ports:
+        - name: ssh
+          containerPort: 22
+        - name: http
+          containerPort: 3000
+        livenessProbe:
+          tcpSocket:
+            port: http
+          initialDelaySeconds: 200
+          timeoutSeconds: 1
+          periodSeconds: 10
+          successThreshold: 1
+          failureThreshold: 10
+        readinessProbe:
+          tcpSocket:
+            port: http
+          initialDelaySeconds: 5
+          periodSeconds: 10
+          successThreshold: 1
+          failureThreshold: 3
+        resources:
+                limits:
+                  cpu: 1
+                  memory: 2Gi
+                requests:
+                  cpu: 1000m
+                  memory: 500Mi
+        volumeMounts:
+        - name: gogs-data
+          mountPath: /data
+        - name: gogs-config
+          mountPath: /app/gogs/custom
+      - name: memcached
+        image: memcached:1.5.19-alpine
+        imagePullPolicy: IfNotPresent
+        command:
+          - memcached
+          - -m 64
+          - -o
+          - modern
+          - -v
+        ports:
+        - name: memcache
+          containerPort: 11211
+        livenessProbe:
+          tcpSocket:
+            port: memcache
+          initialDelaySeconds: 30
+          timeoutSeconds: 5
+        readinessProbe:
+          tcpSocket:
+            port: memcache
+          initialDelaySeconds: 5
+          timeoutSeconds: 1
+        securityContext:
+          runAsUser: 1000
+        resources:
+                requests:
+                  cpu: 50m
+                  memory: 64Mi
+      initContainers:
+      - name: init
+        image: gogs/gogs:0.12.3
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: gogs-db
+              key: dbPassword
+        - name: SCRIPT
+          value: &script |-
+            mkdir -p /datatmp/gogs/conf
+            if [ ! -f /datatmp/gogs/conf/app.ini ]; then
+              sed "s/POSTGRES_PASSWORD/${POSTGRES_PASSWORD}/g" < /etc/gogs/app.ini > /datatmp/gogs/conf/app.ini
+            fi
+        command: ["/bin/sh",'-c', *script]
+        volumeMounts:
+        - name: gogs-data
+          mountPath: /datatmp
+        - name: gogs-config
+          mountPath: /etc/gogs
+      - name: "create-subpath"
+        image: busybox:1.32.0
+        imagePullPolicy: IfNotPresent
+        command: ["/bin/sh"]
+        args: ["-c","mkdir -p /var/lib/postgresql/data/pgdata/postgresql-db;"]
+        volumeMounts:
+        - name: postgres-data
+          mountPath: /var/lib/postgresql/data/pgdata
+      - name: "change-permission-of-directory"
+        image: busybox:1.32.0
+        imagePullPolicy: IfNotPresent
+        command: ["/bin/sh"]
+        args: ["-c", "chown -R 999:999 /var/lib/postgresql/data/pgdata"]
+        volumeMounts:
+        - name: postgres-data
+          mountPath: /var/lib/postgresql/data/pgdata
+          subPath: postgresql-db
+      volumes:
+      - name: gogs-data
+        emptyDir: {}
+      - name: postgres-data
+        emptyDir: {}
+      - name: gogs-config
+        configMap:
+          name: gogs-gogs
+---
+# Source: gogs/templates/tests/ssh-test.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "gogs-gogs-test-ssh"
+  labels:
+    app: gogs-gogs
+    chart: "gogs-0.1.3"
+    release: "gogs"
+    heritage: "Helm"
+  annotations:
+    "helm.sh/hook": test-success
+spec:
+  containers:
+    - name: wget
+      image: busybox
+      command: ['nc'] # nc -vz (your router's IP address) (port)
+      args: ['-vz', 'gogs-gogs-ssh', '22']
+  restartPolicy: OnFailure
+---
+# Source: gogs/templates/tests/webui-test.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "gogs-gogs-test-http"
+  labels:
+    app: gogs-gogs
+    chart: "gogs-0.1.3"
+    release: "gogs"
+    heritage: "Helm"
+  annotations:
+    "helm.sh/hook": test-success
+spec:
+  containers:
+    - name: wget
+      image: busybox
+      command: ['wget']
+      args: ['gogs-gogs-http:3000']
+  restartPolicy: OnFailure
