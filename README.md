@@ -1,6 +1,6 @@
-# Geekshubs Leadership & Tech Management Bootcamp, 2021
+# Geekshubs Leadership & Tech Management Bootcamp, 2023
 
-# Módulo 5 - DevOps
+# Módulo 4 - DevOps
 
 ```
 Profesor: Pedro Díaz
