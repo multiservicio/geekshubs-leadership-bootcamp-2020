@@ -4,7 +4,7 @@
 
 ```
 Profesor: Pedro Díaz
-Sábado 28, Enero 2023
+Sábado 20, Mayo 2023
 Total: 5h
 ```
 
@@ -33,7 +33,7 @@ Integration / Continuous Delivery).
 
 ## Requerimientos
 
-Principalmente vamos a usar `Docker Desktop` (también con Rancher Desktop) para toda la parte de los ejemplos y el live coding. También tocaremos, brevemente, algo de `Kubernetes`. Si tu sistema operativo es _Linux_ o _macOS_ no tendrás grandes problemas ya que funciona *algo* mejor que en _Windows_.
+Principalmente vamos a usar `Docker Desktop` (también con Colima) para toda la parte de los ejemplos y el live coding. También tocaremos, brevemente, algo de `Kubernetes`. Si tu sistema operativo es _Linux_ o _macOS_ no tendrás grandes problemas ya que funciona *algo* mejor que en _Windows_.
 
 Para instalar `docker` hay dos formas, una sería instalarlo en tu sistema operativo base o bien crear una máquina virtual e instalarlo dentro.
 
@@ -43,15 +43,21 @@ Para la primera opción podemos seguir las guías oficiales:
 - macOS: https://docs.docker.com/docker-for-mac/install/
 - Linux (ubuntu): https://docs.docker.com/engine/install/ubuntu/
 
-### Rancher Desktop
-Es una alternativa que, de momento, no tiene licencia comercial. (Ahora mismo Docker Desktop es únicamente gratuito para uso no comercial)
+### Colima
+Es una alternativa que no tiene licencia comercial. (Ahora mismo Docker Desktop es únicamente gratuito para uso no comercial)
 
-https://rancherdesktop.io/
+https://github.com/abiosoft/colima
+
+Para arrancarlo:
+
+```
+colima start --cpu 4 --memory 8 --kubernetes
+```
 
 
 ## Kubernetes
 
-Tanto `Docker Desktop` como `Rancher Desktop` vienen con Kubernetes. En el caso de Docker Desktop viene con su distribución de Kubernetes y Rancher viene con su **K3s**. Cualquiera de los _sabores_ de Kubernetes nos vale para los ejemplos.
+Tanto `Docker Desktop` como `Colima` vienen con Kubernetes. En el caso de Docker Desktop viene con su distribución de Kubernetes y `Colima` con `k3s`. Cualquiera de los _sabores_ de Kubernetes nos vale para los ejemplos.
 
 ## Código de ejemplo
 
