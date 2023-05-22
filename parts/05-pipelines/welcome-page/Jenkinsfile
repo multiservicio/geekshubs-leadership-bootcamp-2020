@@ -51,25 +51,16 @@ spec:
         steps {
             container('docker') {
                 sh """
-                    docker build -t localhost:30335/app:$BUILD_NUMBER .
+                    docker build -t acme-welcome-page-app:$BUILD_NUMBER .
                 """
             }
         }
     }
     stage('Push') {
-        steps {
-            container('docker') {
-                sh """
-                    docker push localhost:30335/app:$BUILD_NUMBER
-                """
-            }
-        }
-        post {
-            always {
-                container('docker') {
-                    sh """
-                        docker rmi localhost:30335/app:$BUILD_NUMBER
-                    """
+        stage('Push') {
+            steps {
+                script {
+                    echo "Pusing the image. (in the this demo we do not need to push it as we are using Docker Desktop and it can read it once is built!)"
                 }
             }
         }
