@@ -25,8 +25,8 @@ spec:
     spec:
       containers:
       - name: acme-inc-app
-        image: localhost:30335/acme-inc-app:.TAG
-        imagePullPolicy: Always
+        image: acme-python-app:.TAG
+        imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 8080
 

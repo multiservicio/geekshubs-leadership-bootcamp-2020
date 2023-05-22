@@ -22,8 +22,8 @@ spec:
     spec:
       containers:
       - name: acme-welcome-page
-        image: localhost:30335/acme-inc-welcome-page:.TAG
-        imagePullPolicy: Always
+        image: acme-welcome-page-app:.TAG
+        imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 80
 
