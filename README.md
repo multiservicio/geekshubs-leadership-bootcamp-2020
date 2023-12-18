@@ -4,7 +4,7 @@
 
 ```
 Profesor: Pedro Díaz
-Sábado 20, Mayo 2023
+Sábado 22, Diciembre 2023
 Total: 5h
 ```
 
