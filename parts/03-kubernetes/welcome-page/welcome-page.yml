@@ -6,7 +6,7 @@ metadata:
     app: acme-welcome-page
     company: acme
 spec:
-  replicas: 3
+  replicas: 10
   selector:
     matchLabels:
       app: acme-welcome-page
@@ -24,7 +24,7 @@ spec:
     spec:
       containers:
       - name: acme-welcome-page
-        image: localhost:30335/acme-inc-welcome-page:1
+        image: localhost:30335/acme-inc-welcome-page:3
         ports:
         - containerPort: 80
 

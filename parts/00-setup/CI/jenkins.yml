@@ -100,10 +100,12 @@ data:
     yes n | cp -i /usr/share/jenkins/ref/plugins/* /var/jenkins_plugins/;
     echo "finished initialization"
   plugins.txt: |-
-    kubernetes:3923.v294a_d4250b_91
+    kubernetes:4151.v6fa_f0fb_0b_4c9
     workflow-aggregator:596.v8c21c963d92d
-    git:5.0.2
-    configuration-as-code:1625.v27444588cc3d
+    git:5.2.1
+    configuration-as-code:1763.vb_fe9c1b_83f7b
+    docker-commons:439.va_3cb_0a_6a_fb_29
+    docker-plugin:1.5
 ---
 # Source: jenkins/templates/jcasc-config.yaml
 apiVersion: v1
@@ -121,6 +123,7 @@ metadata:
 data:
   jcasc-default-config.yaml: |-
     jenkins:
+      systemMessage: "Jenkins configured automatically by Jenkins Configuration as Code plugin\n\n"
       authorizationStrategy:
         loggedInUsersCanDoAnything:
           allowAnonymousRead: false
@@ -129,63 +132,60 @@ data:
           allowsSignup: false
           enableCaptcha: false
           users:
-          - id: "${chart-admin-username}"
-            name: "Jenkins Admin"
-            password: "${chart-admin-password}"
+            - id: "admin"
+              name: "Jenkins Admin"
+              password: "admin"
       disableRememberMe: false
       mode: NORMAL
       numExecutors: 0
       labelString: ""
       projectNamingStrategy: "standard"
-      markupFormatter:
-        plainText
+      markupFormatter: plainText
       clouds:
-      - kubernetes:
-          containerCapStr: "10"
-          defaultsProviderTemplate: ""
-          connectTimeout: "5"
-          readTimeout: "15"
-          jenkinsUrl: "http://jenkins.continuous-integration.svc.cluster.local:8080"
-          jenkinsTunnel: "jenkins-agent.continuous-integration.svc.cluster.local:50000"
-          maxRequestsPerHostStr: "32"
-          name: "kubernetes"
-          namespace: "continuous-integration"
-          serverUrl: "https://kubernetes.default"
-          podLabels:
-          - key: "jenkins/jenkins-jenkins-agent"
-            value: "true"
-          templates:
-            - name: "default"
-              namespace: "continuous-integration"
-              id: 474be7705ac6cddeedf68ad2962972dd9921f64c6e534967402794fbf06a21ec
-              containers:
-              - name: "jnlp"
-                alwaysPullImage: false
-                args: "^${computer.jnlpmac} ^${computer.name}"
-                command: 
-                envVars:
-                  - envVar:
-                      key: "JENKINS_URL"
-                      value: "http://jenkins.continuous-integration.svc.cluster.local:8080/"
-                image: "jenkins/inbound-agent:4.11.2-4"
-                privileged: "false"
-                resourceLimitCpu: 512m
-                resourceLimitMemory: 512Mi
-                resourceRequestCpu: 512m
-                resourceRequestMemory: 512Mi
-                runAsUser: 
-                runAsGroup: 
-                ttyEnabled: false
-                workingDir: /home/jenkins/agent
-              idleMinutes: 0
-              instanceCap: 2147483647
-              label: "jenkins-jenkins-agent "
-              nodeUsageMode: "NORMAL"
-              podRetention: Never
-              showRawYaml: true
-              serviceAccount: "default"
-              slaveConnectTimeoutStr: "100"
-              yamlMergeStrategy: override
+        - kubernetes:
+            containerCapStr: "10"
+            defaultsProviderTemplate: ""
+            connectTimeout: "5"
+            readTimeout: "15"
+            jenkinsUrl: "http://jenkins.continuous-integration.svc.cluster.local:8080"
+            jenkinsTunnel: "jenkins-agent.continuous-integration.svc.cluster.local:50000"
+            maxRequestsPerHostStr: "32"
+            name: "kubernetes"
+            namespace: "continuous-integration"
+            serverUrl: "https://kubernetes.default"
+            podLabels:
+              - key: "jenkins/jenkins-jenkins-agent"
+                value: "true"
+            templates:
+              - name: "default"
+                namespace: "continuous-integration"
+                containers:
+                  - name: "jnlp"
+                    alwaysPullImage: false
+                    command:
+                    envVars:
+                      - envVar:
+                          key: "JENKINS_URL"
+                          value: "http://jenkins.continuous-integration.svc.cluster.local:8080/"
+                    image: "jenkins/inbound-agent:4.11.2-4"
+                    privileged: "false"
+                    resourceLimitCpu: 512m
+                    resourceLimitMemory: 512Mi
+                    resourceRequestCpu: 512m
+                    resourceRequestMemory: 512Mi
+                    runAsUser:
+                    runAsGroup:
+                    ttyEnabled: false
+                    workingDir: /home/jenkins/agent
+                idleMinutes: 0
+                instanceCap: 2147483647
+                label: "jenkins-jenkins-agent "
+                nodeUsageMode: "NORMAL"
+                podRetention: Never
+                showRawYaml: true
+                serviceAccount: "default"
+                slaveConnectTimeoutStr: "100"
+                yamlMergeStrategy: override
       crumbIssuer:
         standard:
           excludeClientIPFromCrumb: true
@@ -196,8 +196,9 @@ data:
         usageStatisticsEnabled: true
     unclassified:
       location:
-        adminAddress: 
-        url: http://jenkins:8080
+        adminAddress:
+        url: http://localhost:30332
+
 ---
 # Source: jenkins/templates/home-pvc.yaml
 kind: PersistentVolumeClaim
@@ -383,7 +384,7 @@ spec:
       serviceAccountName: "jenkins"
       initContainers:
         - name: "init"
-          image: "jenkins/jenkins:2.375.2-jdk11"
+          image: "jenkins/jenkins:2.437-jdk11"
           imagePullPolicy: "Always"
           securityContext:
             allowPrivilegeEscalation: false
@@ -411,7 +412,7 @@ spec:
               name: tmp-volume
       containers:
         - name: jenkins
-          image: "jenkins/jenkins:2.375.2-jdk11"
+          image: "jenkins/jenkins:2.437-jdk11"
           imagePullPolicy: "Always"
           securityContext:
             allowPrivilegeEscalation: false
@@ -587,7 +588,7 @@ spec:
         name: tools
   containers:
     - name: jenkins-ui-test
-      image: jenkins/jenkins:2.375.2-jdk11
+      image: jenkins/jenkins:2.437-jdk11
       command: ["/tools/bats/bin/bats", "-t", "/tests/run.sh"]
       volumeMounts:
       - mountPath: /tests
