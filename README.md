@@ -4,7 +4,7 @@
 
 ```
 Profesor: Pedro Díaz
-Sábado 22, Diciembre 2023
+Sábado 11, Mayo 2024
 Total: 5h
 ```
 
@@ -83,4 +83,4 @@ Si decidís usar vscode con el plugin de `marp` podeis llegar a ver todo el mate
 
 
 ----
-Geekhubs - Tech Managemente & Leadership Bootcamp 2023 - Pedro Díaz
+Geekhubs - Tech Managemente & Leadership Bootcamp 2024 - Pedro Díaz
